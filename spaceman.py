@@ -1,4 +1,6 @@
 import random
+guessed_letters = [] # list to store guessed letters
+
 
 def load_word():
     '''
@@ -31,7 +33,7 @@ def is_word_guessed(secret_word, letters_guessed):
     guess = ""
 
     for i in range(len(secret_word)):
-        if secret_word[i] in letters_guessed:
+        if secret_word[i] in guessed_letters:
             guess += secret_word[i]
 
     if secret_word == guess:
@@ -52,8 +54,6 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
-
-    pass
 
 
 def is_guess_in_word(guess, secret_word):
