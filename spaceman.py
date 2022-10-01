@@ -84,14 +84,27 @@ def is_guess_in_word(guess, secret_word):
         print("Sorry, your guess was not in the word, try again")
         return False
 
-def game_over():
+def game_over(gamestate):
+    
     letters_guessed.clear()
     play_again = input("Would you like to play again? (Y/N)").lower()
     if play_again == 'y':
-        pass # reset variables and play again
+        gamestate = True
+        # reset variables and play again
+        return gamestate
     else:
+        gamestate = False
         print("Thanks for playing!")
+        return gamestate
 
+def prompt():
+    while True:
+        guessed_letter = input("Enter a letter: ").lower()
+        if len(guessed_letter) > 1:
+            print("Only one letter is allowed! Please try again")
+            continue
+        else:
+            return guessed_letter
 
 def spaceman(secret_word, guesses_left):
     '''
@@ -130,13 +143,20 @@ def spaceman(secret_word, guesses_left):
         #     game_over()
         # else:
         #     pass
-        if guesses_left == 0:
-            # losing message
-            game_over()
-        else:
-            pass
+        guess = prompt()
+        letters_guessed.append(guess)
 
-        guesses_left -= 1
+        if is_guess_in_word(guess, secret_word):
+            print(f"Guessed word so far: {get_guessed_word(secret_word, letters_guessed)}")
+            # print(f"These letters haven't been guessed yet...")
+        else:
+            guesses_left -= 1
+            if guesses_left == 0:
+                # losing message
+                game_over(gamestate)
+            else:
+                pass
+
         print(f"You have {guesses_left} incorrect guesses left, please enter one letter per round")
         # print(f"These letters haven’t been guessed yet: "abcd...etc")
         get_guessed_word(secret_word, letters_guessed)
