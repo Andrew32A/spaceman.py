@@ -84,9 +84,16 @@ def is_guess_in_word(guess, secret_word):
         print("Sorry, your guess was not in the word, try again")
         return False
 
+def game_over():
+    letters_guessed.clear()
+    play_again = input("Would you like to play again? (Y/N)").lower()
+    if play_again == 'y':
+        pass # reset variables and play again
+    else:
+        print("Thanks for playing!")
 
 
-def spaceman(secret_word):
+def spaceman(secret_word, guesses_left):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
 
@@ -106,17 +113,30 @@ def spaceman(secret_word):
 
     #TODO: check if the game has been won or lost
 
-    print("Welcome to spaceman!")
+    print("Welcome to spaceman!!")
     tutorial = input("Would you like instructions on how to play? (Y/N)").lower()
 
     if tutorial == "y":
         print("Spaceman is a simple game all about guessing. A random 'secret' word is selected and you are in charge of guessing what it is. You are able to guess one letter at a time but are ONLY able to have 7 incorrect guesses. Good luck!!")
     else:
-        return
+        pass
 
     print(f"The secret word contains: {len(secret_word)} letters")
 
     while gamestate == True:
+        # is_word_guessed(secret_word, letters_guessed)
+        # if is_word_guessed(secret_word, letters_guessed) == True:
+        #     # winning message
+        #     game_over()
+        # else:
+        #     pass
+        if guesses_left == 0:
+            # losing message
+            game_over()
+        else:
+            pass
+
+        guesses_left -= 1
         print(f"You have {guesses_left} incorrect guesses left, please enter one letter per round")
         # print(f"These letters haven’t been guessed yet: "abcd...etc")
         get_guessed_word(secret_word, letters_guessed)
@@ -126,4 +146,4 @@ def spaceman(secret_word):
 
 #These function calls that will start the game
 secret_word = load_word()
-spaceman(secret_word)
+spaceman(secret_word, 7) #change 7 to edit how many incorrect guesses player may have
