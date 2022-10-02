@@ -1,6 +1,6 @@
 import random
 letters_guessed = [] # list to store guessed letters
-guesses_left = 7 # initializes variable
+guesses_left = 0 # initializes variable
 gamestate = True # initializes variable
 
 # loads and randomizes secret_word
@@ -53,14 +53,15 @@ def alphabet_storage(guess):
         alphabet.remove(guess)
     else:
         pass
-    print(f"\nThese letters haven't been guessed yet {alphabet}")
+    print(f"\nThese letters haven't been guessed yet: {alphabet}")
 
 # game over and game reset
 def game_over(gamestate):
     letters_guessed.clear()
-    play_again = input("Would you like to play again? (Y/N) ").lower()
+    play_again = input("Would you like to play again? (Y/N): ").lower()
     if play_again == 'y':
         # reset variables and play again
+        print("\n\n\n\n\n\n\n\n\n\n\n")
         gamestate = True
         secret_word = load_word()
         spaceman(secret_word, 7)
@@ -72,7 +73,7 @@ def game_over(gamestate):
 # prompt user for input and check if there's more than one input
 def prompt():
     while True:
-        print("\n\n----------------------------------------------------\n\n")
+        print("----------------------------------------------------\n")
         guessed_letter = input("Enter a letter: ").lower()
         if len(guessed_letter) > 1:
             print("\nOnly one letter is allowed! Please try again\n")
@@ -82,7 +83,7 @@ def prompt():
 
 # controls the spaceman game loop
 def spaceman(secret_word, guesses_left):
-    print(secret_word) # comment this out in final version, used for testing purposes
+    # print(secret_word) # comment this out in final version, used for testing purposes
     print(f"\nThe secret word contains: {len(secret_word)} letters\n")
 
     while gamestate == True:
@@ -92,7 +93,6 @@ def spaceman(secret_word, guesses_left):
         if is_guess_in_word(guess, secret_word):
             print("\nGuessed word so far: ")
             get_guessed_word(secret_word, letters_guessed)
-            # get_guessed_word(secret_word, letters_guessed) idk, might be bug
 
         else:
             guesses_left -= 1
@@ -117,7 +117,7 @@ print("\n\n-------------------------- Welcome to spaceman!! --------------------
 tutorial = input("Would you like instructions on how to play? (Y/N): ").lower()
 
 if tutorial == "y":
-    print("\n\nSpaceman is a simple game all about guessing. A random 'secret' word is selected and you are in charge of guessing what it is. You are able to guess one letter at a time but are ONLY able to have 7 incorrect guesses. Good luck!!\n\n")
+    print("\n\nSpaceman is a simple game all about guessing. A random 'secret' word is selected and you are in charge of guessing what it is. You are able to guess one letter at a time but are ONLY able to have 7 incorrect guesses. Good luck!\n\n")
 else:
     pass
 
