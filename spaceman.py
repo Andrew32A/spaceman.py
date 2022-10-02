@@ -84,6 +84,16 @@ def is_guess_in_word(guess, secret_word):
         print("Sorry, your guess was not in the word, try again")
         return False
 
+# stores and gets rid of letters left
+def alphabet_storage(guess):
+    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    if guess in alphabet:
+        alphabet.remove(guess)
+    else:
+        pass
+    print(alphabet)
+
+# game over and game reset
 def game_over(gamestate):
     letters_guessed.clear()
     play_again = input("Would you like to play again? (Y/N) ").lower()
@@ -97,6 +107,7 @@ def game_over(gamestate):
         print("Thanks for playing!")
         return
 
+# prompt user for input and check if there's more than one input
 def prompt():
     while True:
         guessed_letter = input("Enter a letter: ").lower()
@@ -106,6 +117,7 @@ def prompt():
         else:
             return guessed_letter
 
+# controls the spaceman game loop
 def spaceman(secret_word, guesses_left):
     '''
     A function that controls the game of spaceman. Will start spaceman in the command line.
@@ -114,56 +126,41 @@ def spaceman(secret_word, guesses_left):
       secret_word (string): the secret word to guess.
 
     '''
-
-
-    #TODO: show the player information about the game according to the project spec
-
-    #TODO: Ask the player to guess one letter per round and check that it is only one letter
-
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-
-    #TODO: show the guessed word so far
-
-    #TODO: check if the game has been won or lost
-
-    print("Welcome to spaceman!!")
-    tutorial = input("Would you like instructions on how to play? (Y/N) ").lower()
-
-    if tutorial == "y":
-        print("Spaceman is a simple game all about guessing. A random 'secret' word is selected and you are in charge of guessing what it is. You are able to guess one letter at a time but are ONLY able to have 7 incorrect guesses. Good luck!!")
-    else:
-        pass
-
     print(f"The secret word contains: {len(secret_word)} letters")
 
     while gamestate == True:
-        # is_word_guessed(secret_word, letters_guessed)
-        # if is_word_guessed(secret_word, letters_guessed) == True:
-        #     # winning message
-        #     game_over()
-        # else:
-        #     pass
         guess = prompt()
         letters_guessed.append(guess)
 
         if is_guess_in_word(guess, secret_word):
             print(f"Guessed word so far: {get_guessed_word(secret_word, letters_guessed)}")
-            # print(f"These letters haven't been guessed yet...")
         else:
             guesses_left -= 1
-            if guesses_left == 0:
-                # losing message
+            if guesses_left <= 0:
+                print(f"Game over! The word was {secret_word}")
                 game_over(gamestate)
                 return
             else:
                 pass
 
+        if is_word_guessed(secret_word, letters_guessed):
+            print("Congrats! You won!!")
+            game_over(gamestate)
+            return
+
+        print(f"These letters haven't been guessed yet {alphabet_storage(guess)}")
         print(f"You have {guesses_left} incorrect guesses left, please enter one letter per round")
         # print(f"These letters haven’t been guessed yet: "abcd...etc")
         get_guessed_word(secret_word, letters_guessed)
 
+# tutorial message/prompt
+print("Welcome to spaceman!!")
+tutorial = input("Would you like instructions on how to play? (Y/N) ").lower()
 
-
+if tutorial == "y":
+    print("Spaceman is a simple game all about guessing. A random 'secret' word is selected and you are in charge of guessing what it is. You are able to guess one letter at a time but are ONLY able to have 7 incorrect guesses. Good luck!!")
+else:
+    pass
 
 #These function calls that will start the game
 secret_word = load_word()
