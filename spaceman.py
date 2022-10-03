@@ -1,3 +1,4 @@
+from curses.ascii import isalpha
 import random
 letters_guessed = [] # list to store guessed letters
 guesses_left = 0 # initializes variable
@@ -77,6 +78,9 @@ def prompt():
         guessed_letter = input("Enter a letter: ").lower()
         if len(guessed_letter) > 1:
             print("\nOnly one letter is allowed! Please try again\n")
+            continue
+        elif guessed_letter.isalpha() == False:
+            print("\nOnly alphabetic characters are allowed! Please try again\n")
             continue
         else:
             return guessed_letter
