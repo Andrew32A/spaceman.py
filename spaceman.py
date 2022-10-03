@@ -1,4 +1,3 @@
-from curses.ascii import isalpha
 import random
 letters_guessed = [] # list to store guessed letters
 guesses_left = 0 # initializes variable
