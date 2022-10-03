@@ -47,8 +47,7 @@ def is_guess_in_word(guess, secret_word):
         return False
 
 # stores and gets rid of letters left
-def alphabet_storage(guess):
-    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+def alphabet_storage(guess, alphabet):
     if guess in alphabet:
         alphabet.remove(guess)
     else:
@@ -56,16 +55,14 @@ def alphabet_storage(guess):
     print(f"\nThese letters haven't been guessed yet: {alphabet}")
 
 # game over and game reset
-def game_over(gamestate):
+def game_over():
     letters_guessed.clear()
     play_again = input("Would you like to play again? (Y/N): ").lower()
     if play_again == 'y':
         # reset variables and play again
         print("\n\n\n\n\n\n\n\n\n\n\n")
-        gamestate = True
         secret_word = load_word()
         spaceman(secret_word, 7)
-        return gamestate
     else:
         print("\n\n\n\n-------------------------- Thanks for playing! --------------------------\n\n")
         return
@@ -79,14 +76,16 @@ def prompt():
             print("\nOnly one letter is allowed! Please try again\n")
             continue
         elif guessed_letter.isalpha() == False:
-            print("\nOnly alphabetic characters are allowed! Please try again\n")
+            print("\nOnly letters in the alphabet are allowed! Please try again\n")
             continue
         else:
             return guessed_letter
 
+
 # controls the spaceman game loop
 def spaceman(secret_word, guesses_left):
     # print(secret_word) # comment this out in final version, used for testing purposes
+    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     print(f"\nThe secret word contains: {len(secret_word)} letters\n")
 
     while gamestate == True:
@@ -101,20 +100,19 @@ def spaceman(secret_word, guesses_left):
             guesses_left -= 1
             if guesses_left <= 0:
                 print(f"\n\n-------------------------- Game over! The word was {secret_word} --------------------------\n\n")
-                game_over(gamestate)
+                game_over()
                 return
             else:
                 pass
 
         if is_word_guessed(secret_word, letters_guessed):
             print("\n\n-------------------------- Congrats! You won!! --------------------------\n\n")
-            game_over(gamestate)
+            game_over()
             return
 
-        alphabet_storage(guess)
+        alphabet_storage(guess, alphabet)
         print(f"\nYou have {guesses_left} incorrect guesses left, please enter one letter per round\n")
         
-
 # tutorial message/prompt
 print("\n\n-------------------------- Welcome to spaceman!! --------------------------\n\n")
 tutorial = input("Would you like instructions on how to play? (Y/N): ").lower()
