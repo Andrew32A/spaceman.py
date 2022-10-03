@@ -78,6 +78,8 @@ def prompt():
         elif guessed_letter.isalpha() == False:
             print("\nOnly letters in the alphabet are allowed! Please try again\n")
             continue
+        elif guessed_letter in letters_guessed:
+            print("You have already tried that letter! Please try again")
         else:
             return guessed_letter
 
@@ -97,6 +99,9 @@ def spaceman(secret_word, guesses_left):
             get_guessed_word(secret_word, letters_guessed)
 
         else:
+            print("\nGuessed word so far: ")
+            get_guessed_word(secret_word, letters_guessed)
+            print("")
             guesses_left -= 1
             if guesses_left <= 0:
                 print(f"\n\n-------------------------- Game over! The word was {secret_word} --------------------------\n\n")
@@ -122,6 +127,6 @@ if tutorial == "y":
 else:
     pass
 
-#These function calls that will start the game
+# function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word, 7) #change 7 to edit how many incorrect guesses player may have
